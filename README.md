@@ -34,11 +34,13 @@ services:
       - "8181:8181"
     environment:
       - PANDORA_NEXT_LICENSE=<JWT Token>
+    volumes:
+      - ./data:/data
 ```
 
 * 对照上述`Docker 部署`的内容自行修改。
 
-* 如果你映射了`/data`目录，要提供`config.json`，这是一个示例：
+* 映射了`/data`目录，要提供`config.json`，这是一个示例：
 
 ```json
 {
@@ -46,6 +48,16 @@ services:
   "timeout": 600,
   "proxy_url": ""
 }
+```
+
+`/data`目录必须放在`docker-compose.yaml`同目录。
+
+参考示例：
+```
+├── data
+│   ├── config.json
+│   └── tokens.json
+└── docker-compose.yml
 ```
 
 ## Nginx 配置
