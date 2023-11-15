@@ -52,6 +52,8 @@ services:
 
 `/data`目录必须放在`docker-compose.yaml`同目录。
 
+如果采用宝塔图形化部署`docker-compose.yaml`会在`/www/server/panel/data/compose/乱码/`目录下。
+
 参考示例：
 ```
 ├── data
