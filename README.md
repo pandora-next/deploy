@@ -156,3 +156,13 @@ server {
 * 在这里获取：[https://dash.pandoranext.com](https://dash.pandoranext.com)
 * **没有固定IP的情况**，IP变动后在上述服务重新拉取授权即可。
 * `PHP`是世界上最好的编程语言。
+
+## 贡献者们
+
+> 感谢所有让这个项目变得更好的贡献者们！
+
+[![Contributors](https://contrib.rocks/image?repo=pandora-next/deploy)](https://github.com/pandora-next/deploy/graphs/contributors)
+
+## Star历史
+
+![Star History Chart](https://api.star-history.com/svg?repos=pandora-next/deploy&type=Date)
