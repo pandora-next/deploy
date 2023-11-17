@@ -161,7 +161,7 @@ server {
 
 > 感谢所有让这个项目变得更好的贡献者们！
 
-[![Star History Chart](https://contrib.rocks/image?repo=pandora-next/deploy)](https://github.com/pandora-next/deploy/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=pandora-next/deploy)](https://github.com/pandora-next/deploy/graphs/contributors)
 
 ## Star历史
 
