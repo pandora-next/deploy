@@ -1,0 +1,11 @@
+---
+name:功能请求
+about:对项目好点子建议
+title:"【功能】"
+labels:enhancement
+assignees:xiaobinglan
+---
+1、我喜欢使用原先pandora的可以自己传入问题然后获取输出的结果的形式，方便我将gpt接入其他设备中使用
+2、我希望重新开发Pandora或者是将pandora-next增加有输入问题的导入和输出结果的保存
+3、我考虑过反编译pandora-next获取到相关源码，尝试进行输入问题和输出结果，但是没有成功
+4、我没有成功所以没有截图
