@@ -94,11 +94,21 @@ server {
   "bind": "127.0.0.1:8181",
   "timeout": 600,
   "proxy_url": "",
+  "license_id": "",
   "public_share": false,
   "site_password": "",
   "setup_password": "",
   "server_tokens": true,
   "server_mode": "web",
+  "captcha": {
+    "provider": "",
+    "site_key": "",
+    "site_secret": "",
+    "site_login": false,
+    "setup_login": false,
+    "oai_username": false,
+    "oai_password": false
+  },
   "whitelist": null
 }
 ```
