@@ -30,6 +30,7 @@
 
 * 仓库内已包含相关文件和目录，拉到本地，[获取license_id](#%E5%85%B3%E4%BA%8E-license_id)填写在`data/config.json`中。
 * `data`目录中包含`config.json`、`tokens.json`示例文件可自行修改。
+* 如果希望从`SQLite`中读取tokens，请设置环境变量`PANDORA_NEXT_USE_SQLITE=1`
 * `docker-compose up -d` **原神启动！**
 
 ## Docker 部署
@@ -46,6 +47,7 @@ $ docker run -d --restart always --name PandoraNext --net=bridge \
 * 容器内默认监听`8181`端口，映射宿主机的`8181`端口，可自行修改。
 * 你可以映射目录到容器内的`/data`目录，`config.json`、`tokens.json`和[获取license_id](#%E5%85%B3%E4%BA%8E-license_id)填写在`config.json`中。
 * 你可以映射目录到容器内的`/root/.cache/PandoraNext`目录，保留登录的`session`，避免重启容器登录状态丢失。
+* 如果希望从`SQLite`中读取tokens，请设置环境变量`PANDORA_NEXT_USE_SQLITE=1`
 
 ## Nginx 配置
 
@@ -131,8 +133,8 @@ server {
 * `proxy_url`指定部署服务流量走代理，如：`http://127.0.0.1:8888`、`socks5://127.0.0.1:7980`
 * `license_id`指定你的License Id，可以在[这里获取](#%E5%85%B3%E4%BA%8E-license_id)。
 * `public_share`对于GPT中创建的对话分享，是否需要登录才能查看。为`true`则无需登录即可查看。
-* `site_password`设置整站密码，需要先输入这个密码，正确才能进行后续步骤。充分保障私密性。
-* `setup_password`定义一个设置密码，用于调用`/setup/`开头的设置接口，为空则不可调用。
+* `site_password`设置整站密码，需要先输入这个密码，正确才能进行后续步骤。充分保障私密性。不少于`8`位，且同时包含`数字`和`字母`！
+* `setup_password`定义一个设置密码，用于调用`/setup/`开头的设置接口，为空则不可调用。不少于`8`位，且同时包含`数字`和`字母`！
 * `server_tokens`设置是否在响应头中显示版本号，`true`显示，`false`则不显示。
 * `proxy_api_prefix`可以给你的`proxy`模式接口地址添加前缀，让人意想不到。注意设置的字符应该是url中允许的字符。包括：`a-z` `A-Z` `0-9` `-` `_` `.` `~`
 * `proxy_api_prefix` 你必须设置一个不少于`8`位，且同时包含`数字`和`字母`的前缀才能开启`proxy`模式！
@@ -140,6 +142,7 @@ server {
     * `/v1/chat/completions` 3.5模型比例 `1:4`
     * `/v1/chat/completions` 4模型比例 `1:10`, 无需打码
     * `/api/auth/login` 登录接口比例 `1:100`，无需打码
+    * `/api/arkose/token` 获取`arkose_token`，比例 `1:10`
 * `isolated_conv_title`现在隔离会话可以设置标题了，而不再是千篇一律的`*`号。
 * `captcha`配置一些关键页面的验证码。
     * `provider`验证码提供商，支持：`recaptcha_v2`、`recaptcha_enterprise`、`hcaptcha`、`turnstile`、`friendly_captcha`。
@@ -152,6 +155,7 @@ server {
 * `whitelist`邮箱数组指定哪些用户可以登录使用，用户名/密码登录受限制，各种Token登录受限。内置tokens不受限。
 * `whitelist`为`null`则不限制，为空数组`[]`则限制所有账号，内置tokens不受限。
 * 一个`whitelist`的例子：```"whitelist": ["mail2@test.com", "mail2@test.com"]```
+* 如果你希望从`SQLite`读取tokens，程序启动时指定参数`-token tokens.db`，文件名随意，后缀需要`.db`
 
 ## tokens 配置
 
@@ -171,7 +175,7 @@ server {
     "plus": true
   },
   "test2": {
-    "token": "access token / session token / refresh token / share token",
+    "token": "access token / session token / refresh token / share token / username & password",
     "password": "12345"
   }
 }
@@ -185,6 +189,8 @@ server {
 * `/shared.html`中的账号和共享站功能相同，可以自行设置隔离密码进行会话隔离。
 * `plus`用来标识`/shared.html`上账号是否有金光，没有其他作用。
 * `show_user_info`表示`/shared.html`共享时是否显示账号邮箱信息，GPTs建议开启。
+* 现在可以直接内置用户名密码登录，此种方法必须设置`password`且`shared`不可为`true`。
+* 内置账号密码的格式为：`邮箱,密码`，此种是`0`额度消耗的。
 
 ## proxy模式接口
 * /backend-api/* `ChatGPT`网页版接口，具体F12去页面上看。
@@ -196,6 +202,8 @@ server {
 * **POST** /api/token/register 生成share token
 * **POST** /api/pool/update 生成更新pool token
 * **POST** /v1/chat/completions 使用`ChatGPT`模拟`API`的请求接口，支持share token和pool token。
+* **POST** /api/arkose/token 获取arkose_token，目前只支持`gpt-4`类型。使用urlencode form传递type=gpt-4参数。获取后可API方式调用`GPTs`
+* **POST** /api/setup/reload 重载当前服务的`config.json`、`tokens.json`等配置。
 * 以上地址均需在最前面增加 `/<proxy_api_prefix>`，也就是你设置的前缀。
 
 
