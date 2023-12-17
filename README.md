@@ -151,7 +151,7 @@ server {
 * `disable_signup` 禁用注册账号功能，`true`或`false`。
 * `auto_conv_arkose` 在`proxy`模式使用`gpt-4`模型调用`/backend-api/conversation`接口是否自动打码，使用消耗为`4+10`。
 * `proxy_file_service` 在`proxy`模式是否使用PandoraNext的文件代理服务，避免官方文件服务的墙。
-* `custom_doh_host` 配置自定义的`DoH`主机名，建议使用IP形式。默认启动时在公共`DoH`中挑选你所在地区最快的那个。
+* `custom_doh_host` 配置自定义的`DoH`主机名，建议使用IP形式。默认启动时在公共`DoH`中挑选你所在地区最快的那个。在+8区可以使用223.6.6.6，其余地区可以使用1.1.1.1。
 * `captcha`配置一些关键页面的验证码。
     * `provider`验证码提供商，支持：`recaptcha_v2`、`recaptcha_enterprise`、`hcaptcha`、`turnstile`、`friendly_captcha`。
     * `site_key`验证码供应商后台获取的网站参数，是可以公布的信息。
